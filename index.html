@@ -23,30 +23,48 @@
         h1 {
             text-align: center;
             color: #4CAF50;
-            font-size: 2rem;
         }
-
-        /* Slider Section */
+        .section {
+            margin: 20px 0;
+        }
+        .option {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .donate-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .donate-btn:hover {
+            background-color: #45a049;
+        }
         .image-slider-container {
             position: relative;
             width: 100%;
+            max-width: 600px;
             margin: auto;
             overflow: hidden;
             border-radius: 8px;
         }
-
         .slider-images {
             display: flex;
             transition: transform 0.5s ease;
-            width: 100%;
         }
-
         .slider-images img {
             width: 100%;
-            object-fit: cover; /* Ensures images cover the area without distortion */
+            max-width: 600px;
             border-radius: 8px;
         }
-
         .slider-nav {
             position: absolute;
             top: 50%;
@@ -55,7 +73,6 @@
             justify-content: space-between;
             transform: translateY(-50%);
         }
-
         .slider-nav button {
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
@@ -64,73 +81,26 @@
             cursor: pointer;
             border-radius: 50%;
         }
-
         .slider-nav button:hover {
             background-color: rgba(0, 0, 0, 0.7);
         }
-
-        /* Donation and Other Sections */
-        .section {
-            margin: 20px 0;
+        .info-text {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
         }
-
-        .option {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-
-        .donate-btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 8px;
+        .story-text {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-left: 5px solid #4CAF50;
             margin-top: 20px;
+            font-size: 16px;
+            color: #333;
         }
-
-        .donate-btn:hover {
-            background-color: #45a049;
-        }
-
         #custom-amount {
             width: 100%;
             padding: 8px;
             margin-top: 10px;
-        }
-
-        /* Media Queries for Responsiveness */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            .option {
-                font-size: 0.9rem;
-            }
-
-            .donate-btn {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-
-            .option {
-                font-size: 0.85rem;
-            }
-
-            .donate-btn {
-                font-size: 0.85rem;
-            }
         }
     </style>
 </head>
@@ -158,6 +128,7 @@
         <p>Millions of children in India go to bed hungry every day. They wake up without the energy to study, play, or even smile. Your donation can change this. By contributing, you're giving them more than just food; you're giving them a chance at a better life. Every ₹20 you donate provides one child with a meal, bringing hope and joy into their world.</p>
     </div>
 
+    
     <!-- Donation Options -->
     <div class="section">
         <label for="donation-amount">Choose the number of children to feed:</label><br><br>
@@ -189,8 +160,9 @@
 
     <button class="donate-btn" onclick="redirectToDonation()">Donate Now</button>
 
-    <p class="info-text">Your donation can make a big difference in the lives of children in need. Every ₹20 feeds one child. You can help more children by contributing more. Together, we can make a lasting impact. <strong>Will you join us in making a change?</strong></p>
+<p class="info-text">Your donation can make a big difference in the lives of children in need. Every ₹20 feeds one child. You can help more children by contributing more. Together, we can make a lasting impact. <strong>Will you join us in making a change?</strong></p>
 
+    
     <p class="info-text">100% of your donation goes directly towards feeding children in need. Your contribution is transparent and impactful.</p>
 </div>
 
