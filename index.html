@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate for Children's Feeding</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center
+        ;
+            color: #4CAF50;
+        }
+        .section {
+            margin: 20px 0;
+        }
+        .option {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .donate-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .donate-btn:hover {
+            background-color: #45a049;
+        }
+        .image-slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .slider-images {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slider-images img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 8px;
+        }
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .slider-nav button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .slider-nav button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .info-text {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+        }
+        #custom-amount {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Feed a Child Today</h1>
+
+    <div class="image-slider-container">
+        <div class="slider-images">
+            <img src="https://via.placeholder.com/600x350.png?text=Indian+Child+1" alt="Indian Child 1">
+            <img src="https://via.placeholder.com/600x350.png?text=Indian+Child+2" alt="Indian Child 2">
+            <img src="https://via.placeholder.com/600x350.png?text=Indian+Child+3" alt="Indian Child 3">
+        </div>
+        <div class="slider-nav">
+            <button onclick="prevSlide()">&#10094;</button>
+            <button onclick="nextSlide()">&#10095;</button>
+        </div>
+    </div>
+
+    <p class="info-text">Your donation can make a big difference in the lives of children in need. Every ₹20 feeds one child. You can help more children by contributing more. Together, we can make a lasting impact.</p>
+
+    <div class="section">
+        <label for="donation-amount">Choose the number of children to feed:</label>
+        <div class="option">
+            <label>
+                <input type="radio" name="donation" value="20" checked> ₹20 - Feed 1 Child
+            </label>
+            <span>₹20</span>
+        </div>
+        <div class="option">
+            <label>
+                <input type="radio" name="donation" value="60"> ₹60 - Feed 3 Children
+            </label>
+            <span>₹60</span>
+        </div>
+        <div class="option">
+            <label>
+                <input type="radio" name="donation" value="200"> ₹200 - Feed 10 Children
+            </label>
+            <span>₹200</span>
+        </div>
+        <div class="option">
+            <label>
+                <input type="radio" name="donation" value="other"> Other (Custom Amount)
+            </label>
+            <input type="number" id="custom-amount" placeholder="Enter amount" style="display: none;">
+        </div>
+    </div>
+
+    <button class="donate-btn" onclick="redirectToDonation()">Donate Now</button>
+
+    <p class="info-text">100% of your donation goes directly towards feeding children in need.</p>
+</div>
+
+<script>
+    const donationRadioButtons = document.querySelectorAll('input[name="donation"]');
+    const customAmountInput = document.getElementById('custom-amount');
+    const sliderImages = document.querySelector('.slider-images');
+    let currentSlide = 0;
+
+    // Show the custom amount input when "Other" is selected
+    donationRadioButtons.forEach(button => {
+        button.addEventListener('change', function () {
+            if (this.value === 'other') {
+                customAmountInput.style.display = 'block';
+            } else {
+                customAmountInput.style.display = 'none';
+            }
+        });
+    });
+
+    // Redirect to the donation page with the chosen amount
+    function redirectToDonation() {
+        let amount = document.querySelector('input[name="donation"]:checked').value;
+
+        if (amount === 'other') {
+            amount = customAmountInput.value;
+        }
+
+        if (!amount || amount <= 0) {
+            alert("Please enter a valid amount.");
+            return;
+        }
+
+        const donationUrl = `https://admin-panel.in/V3/api/pati2.php?amount=${amount}`;
+        window.location.href = donationUrl;
+    }
+
+    // Next Slide Function
+    function nextSlide() {
+        if (currentSlide < 2) {
+            currentSlide++;
+        } else {
+            currentSlide = 0;
+        }
+        updateSliderPosition();
+    }
+
+    // Previous Slide Function
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+        } else {
+            currentSlide = 2;
+        }
+        updateSliderPosition();
+    }
+
+    // Update Slider Position
+    function updateSliderPosition() {
+        sliderImages.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    // Auto Slide every 3 seconds
+    setInterval(nextSlide, 3000);
+</script>
+
+</body>
+</html>
